@@ -1,5 +1,7 @@
 package com.example.howgarts.dto;
 
+import com.example.howgarts.model.Nota;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class EstudianteDto {
     private String casa;
     private MascotaDto mascota;
     private List<AsignaturaCalificacionDto> asignaturas;
+    private List<Nota> notas;
 
     public Long getId() {
         return id;
