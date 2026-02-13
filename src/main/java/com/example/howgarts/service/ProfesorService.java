@@ -1,11 +1,14 @@
 package com.example.howgarts.service;
 
+import com.example.howgarts.dto.ProfesorDto;
+import com.example.howgarts.mapper.ProfesorMapper;
 import com.example.howgarts.model.Profesor;
 import com.example.howgarts.repository.ProfesorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfesorService {
@@ -16,12 +19,12 @@ public class ProfesorService {
         this.profesorRepository = profesorRepository;
     }
 
-    public List<Profesor> getAll() {
-        return profesorRepository.findAll();
+    public List<ProfesorDto> getAll() {
+        return profesorRepository.findAll().stream().map(ProfesorMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Optional<Profesor> getById(Integer id) {
-        return profesorRepository.findById(id);
+    public Optional<ProfesorDto> getById(Integer id) {
+        return profesorRepository.findById(id).map(ProfesorMapper::toDTO);
     }
 
     public Profesor create(Profesor profesor) {

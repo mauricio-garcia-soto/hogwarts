@@ -1,11 +1,14 @@
 package com.example.howgarts.service;
 
+import com.example.howgarts.dto.MascotaDto;
+import com.example.howgarts.mapper.MascotaMapper;
 import com.example.howgarts.model.Mascota;
 import com.example.howgarts.repository.MascotaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MascotaService {
@@ -16,20 +19,22 @@ public class MascotaService {
         this.mascotaRepository = mascotaRepository;
     }
 
-    public List<Mascota> getAll() {
-        return mascotaRepository.findAll();
+    public List<MascotaDto> getAll() {
+        return mascotaRepository.findAll().stream()
+                .map(MascotaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Mascota> getById(Integer id) {
-        return mascotaRepository.findById(id);
+    public Optional<MascotaDto> getById(Integer id) {
+        return mascotaRepository.findById(id).map(MascotaMapper::toDTO);
     }
 
     public Mascota create(Mascota mascota) {
         return mascotaRepository.save(mascota);
     }
 
-    public Mascota update(Integer id, Mascota mascota) {
-        mascota.setIdMascota(id);
+    public Mascota update(Long id, Mascota mascota) {
+        mascota.setId(id);
         return mascotaRepository.save(mascota);
     }
 

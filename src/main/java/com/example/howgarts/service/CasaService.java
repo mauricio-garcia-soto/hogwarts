@@ -1,11 +1,14 @@
 package com.example.howgarts.service;
 
+import com.example.howgarts.dto.CasaDto;
+import com.example.howgarts.mapper.CasaMapper;
 import com.example.howgarts.model.Casa;
 import com.example.howgarts.repository.CasaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CasaService {
@@ -16,12 +19,13 @@ public class CasaService {
         this.casaRepository = casaRepository;
     }
 
-    public List<Casa> getAll() {
-        return casaRepository.findAll();
+    public List<CasaDto> getAll() {
+        return casaRepository.findAll().stream().map(CasaMapper::toDTO).collect(Collectors.toList());
+
     }
 
-    public Optional<Casa> getById(Integer id) {
-        return casaRepository.findById(id);
+    public Optional<CasaDto> getById(Integer id) {
+        return casaRepository.findById(id).map(CasaMapper::toDTO);
     }
 
     public Casa create(Casa casa) {

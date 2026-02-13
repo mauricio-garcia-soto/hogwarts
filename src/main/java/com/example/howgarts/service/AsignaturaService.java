@@ -1,11 +1,14 @@
 package com.example.howgarts.service;
 
+import com.example.howgarts.dto.AsignaturaDto;
+import com.example.howgarts.mapper.AsignaturaMapper;
 import com.example.howgarts.model.Asignatura;
 import com.example.howgarts.repository.AsignaturaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AsignaturaService {
@@ -23,6 +26,7 @@ public class AsignaturaService {
     public Optional<Asignatura> getById(Integer id) {
         return asignaturaRepository.findById(id);
     }
+
 
     public Asignatura create(Asignatura asignatura) {
         return asignaturaRepository.save(asignatura);

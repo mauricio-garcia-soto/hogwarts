@@ -1,7 +1,6 @@
 package com.example.howgarts.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 public class Profesor {
@@ -12,27 +11,29 @@ public class Profesor {
 
     private String nombre;
 
-    @OneToMany(mappedBy = "jefe", cascade = CascadeType.ALL)
-    private List<Casa> casas;
+    @OneToOne
+    @JoinColumn(name = "profesor_asignatura")
+    private Asignatura asignatura;
 
-    @ManyToMany
-    @JoinTable(
-            name = "profesor_asignatura",
-            joinColumns = @JoinColumn(name = "profesor_id"),
-            inverseJoinColumns = @JoinColumn(name = "asignatura_id")
-    )
-    private List<Asignatura> asignaturas;
+    @OneToOne
+    @JoinColumn(name = "profesor_casa")
+    private Casa casa;
 
-    // Getters y setters
+    private java.time.LocalDate fechaInicio;
+
+
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public List<Casa> getCasas() { return casas; }
-    public void setCasas(List<Casa> casas) { this.casas = casas; }
+    public Asignatura getAsignatura() { return asignatura; }
+    public void setAsignatura(Asignatura asignatura) { this.asignatura = asignatura; }
 
-    public List<Asignatura> getAsignaturas() { return asignaturas; }
-    public void setAsignaturas(List<Asignatura> asignaturas) { this.asignaturas = asignaturas; }
+    public Casa getCasa() { return casa; }
+    public void setCasa(Casa casa) { this.casa = casa; }
+
+    public java.time.LocalDate getFechaInicio() { return fechaInicio; }
+    public void setFechaInicio(java.time.LocalDate fechaInicio) { this.fechaInicio = fechaInicio; }
 }

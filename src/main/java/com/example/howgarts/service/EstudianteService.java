@@ -1,39 +1,16 @@
 package com.example.howgarts.service;
 
-import com.example.howgarts.model.Estudiante;
-import com.example.howgarts.repository.EstudianteRepository;
-import org.springframework.stereotype.Service;
+import com.example.howgarts.dto.CrearEstudianteDto;
+import com.example.howgarts.dto.EstudianteDto;
+import com.example.howgarts.dto.EstudianteUpdateDto;
 
 import java.util.List;
-import java.util.Optional;
 
-@Service
-public class EstudianteService {
+public interface EstudianteService {
+    List<EstudianteDto> obtenerTodos();
+    EstudianteDto obtenerPorId(int id);
+    EstudianteDto crearEstudiante(CrearEstudianteDto dto);
+    EstudianteDto actualizarEstudiante(int id, EstudianteUpdateDto dto);
+    void eliminarEstudiante(int id);
 
-    private final EstudianteRepository estudianteRepository;
-
-    public EstudianteService(EstudianteRepository estudianteRepository) {
-        this.estudianteRepository = estudianteRepository;
-    }
-
-    public List<Estudiante> getAll() {
-        return estudianteRepository.findAll();
-    }
-
-    public Optional<Estudiante> getById(Integer id) {
-        return estudianteRepository.findById(id);
-    }
-
-    public Estudiante create(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
-    }
-
-    public Estudiante update(Integer id, Estudiante estudiante) {
-        estudiante.setId(Long.valueOf(id));
-        return estudianteRepository.save(estudiante);
-    }
-
-    public void delete(Integer id) {
-        estudianteRepository.deleteById(id);
-    }
 }

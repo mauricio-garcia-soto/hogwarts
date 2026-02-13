@@ -1,5 +1,6 @@
 package com.example.howgarts.controller;
 
+import com.example.howgarts.dto.CasaDto;
 import com.example.howgarts.model.Casa;
 import com.example.howgarts.service.CasaService;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,12 @@ public class CasaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Casa>> getAll() {
+    public ResponseEntity<List<CasaDto>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Casa> getById(@PathVariable Integer id) {
+    public ResponseEntity<CasaDto> getById(@PathVariable Integer id) {
         return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

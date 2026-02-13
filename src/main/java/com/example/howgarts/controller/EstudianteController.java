@@ -1,6 +1,8 @@
 package com.example.howgarts.controller;
 
-import com.example.howgarts.model.Estudiante;
+import com.example.howgarts.dto.CrearEstudianteDto;
+import com.example.howgarts.dto.EstudianteDto;
+import com.example.howgarts.dto.EstudianteUpdateDto;
 import com.example.howgarts.service.EstudianteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,30 +21,28 @@ public class EstudianteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Estudiante>> getAll() {
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<List<EstudianteDto>> getAll() {
+        return ResponseEntity.ok(service.obtenerTodos());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estudiante> getById(@PathVariable Integer id) {
-        return service.getById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<EstudianteDto> getById(@PathVariable int id) {
+        return ResponseEntity.ok(service.obtenerPorId(id));
     }
 
     @PostMapping
-    public ResponseEntity<Estudiante> create(@RequestBody Estudiante estudiante) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(estudiante));
+    public ResponseEntity<EstudianteDto> create(@RequestBody CrearEstudianteDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.crearEstudiante(dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> update(@PathVariable Integer id, @RequestBody Estudiante estudiante) {
-        return ResponseEntity.ok(service.update(id, estudiante));
+    public ResponseEntity<EstudianteDto> update(@PathVariable int id, @RequestBody EstudianteUpdateDto dto) {
+        return ResponseEntity.ok(service.actualizarEstudiante(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable int id) {
+        service.eliminarEstudiante(id);
         return ResponseEntity.noContent().build();
     }
 }

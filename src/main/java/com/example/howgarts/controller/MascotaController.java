@@ -1,5 +1,6 @@
 package com.example.howgarts.controller;
 
+import com.example.howgarts.dto.MascotaDto;
 import com.example.howgarts.model.Mascota;
 import com.example.howgarts.service.MascotaService;
 import org.springframework.http.HttpStatus;
@@ -19,12 +20,12 @@ public class MascotaController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Mascota>> getAll() {
+    public ResponseEntity<List<MascotaDto>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Mascota> getById(@PathVariable Integer id) {
+    public ResponseEntity<MascotaDto> getById(@PathVariable Integer id) {
         return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -36,7 +37,7 @@ public class MascotaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Mascota> update(@PathVariable Integer id, @RequestBody Mascota mascota) {
+    public ResponseEntity<Mascota> update(@PathVariable Long id, @RequestBody Mascota mascota) {
         return ResponseEntity.ok(service.update(id, mascota));
     }
 
