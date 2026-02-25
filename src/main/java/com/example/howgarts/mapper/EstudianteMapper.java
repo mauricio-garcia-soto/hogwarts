@@ -34,7 +34,6 @@ public class EstudianteMapper {
 
     public Estudiante toEntity(CrearEstudianteDto dto) {
         if (dto == null) return null;
-
         Estudiante estudiante = new Estudiante();
         estudiante.setNombre(dto.getNombre());
         estudiante.setAnyoCurso(dto.getAnyoCurso());

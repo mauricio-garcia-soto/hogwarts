@@ -1,22 +1,29 @@
 package com.example.howgarts.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@Table(name = "asignatura_calificacion")
 public class Nota {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    private Double valor;
 
     @ManyToOne
-    @JoinColumn(name = "asignatura_id")
-    private Asignatura asignatura;
+    @MapsId("idEstudiante")
+    @JoinColumn(name = "id_estudiante")
+    @JsonBackReference
+    Estudiante estudiante;
 
     @ManyToOne
-    @JoinColumn(name = "estudiante_id")
-    private Estudiante estudiante;
+    @MapsId("idAsignatura")
+    @JoinColumn(name = "id_asignatura")
+    @JsonManagedReference
+    Asignatura asignatura;
+
+    double nota;
 }
