@@ -1,4 +1,5 @@
 package com.example.howgarts.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -19,8 +20,8 @@ public class Mascota {
     private String especie;
 
     @OneToOne
-    @JoinColumn(name = "id_estudiante")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "id_estudiante",nullable = false)
+    @JsonBackReference("estudiante-mascota")
     private Estudiante estudiante;
 
 

@@ -1,11 +1,12 @@
 package com.example.howgarts.mapper;
-
 import com.example.howgarts.dto.MascotaDto;
 import com.example.howgarts.model.Mascota;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MascotaMapper {
 
-    public static MascotaDto toDTO(Mascota mascota) {
+    public MascotaDto toDTO(Mascota mascota) {
         if (mascota == null) return null;
 
         MascotaDto dto = new MascotaDto();
@@ -18,5 +19,19 @@ public class MascotaMapper {
         }
 
         return dto;
+    }
+
+    public Mascota toEntity(MascotaDto dto) {
+        if (dto == null) return null;
+
+        Mascota mascota = new Mascota();
+
+        if (dto.getId() != null) {
+            mascota.setId(dto.getId());
+        }
+        mascota.setNombre(dto.getNombre());
+        mascota.setEspecie(dto.getEspecie());
+
+        return mascota;
     }
 }

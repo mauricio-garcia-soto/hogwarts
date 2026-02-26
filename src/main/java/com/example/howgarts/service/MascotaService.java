@@ -14,19 +14,21 @@ import java.util.stream.Collectors;
 public class MascotaService {
 
     private final MascotaRepository mascotaRepository;
+    private final MascotaMapper mascotaMapper;
 
-    public MascotaService(MascotaRepository mascotaRepository) {
+    public MascotaService(MascotaRepository mascotaRepository, MascotaMapper mascotaMapper) {
         this.mascotaRepository = mascotaRepository;
+        this.mascotaMapper = mascotaMapper;
     }
 
     public List<MascotaDto> getAll() {
         return mascotaRepository.findAll().stream()
-                .map(MascotaMapper::toDTO)
+                .map(mascotaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public Optional<MascotaDto> getById(Integer id) {
-        return mascotaRepository.findById(id).map(MascotaMapper::toDTO);
+    public Optional<MascotaDto> getById(Long id) {
+        return mascotaRepository.findById(id).map(mascotaMapper::toDTO);
     }
 
     public Mascota create(Mascota mascota) {
@@ -38,7 +40,7 @@ public class MascotaService {
         return mascotaRepository.save(mascota);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         mascotaRepository.deleteById(id);
     }
 }

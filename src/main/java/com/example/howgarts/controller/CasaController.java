@@ -25,7 +25,7 @@ public class CasaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CasaDto> getById(@PathVariable Integer id) {
+    public ResponseEntity<CasaDto> getById(@PathVariable Long id) {
         return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -37,12 +37,12 @@ public class CasaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Casa> update(@PathVariable Integer id, @RequestBody Casa casa) {
+    public ResponseEntity<Casa> update(@PathVariable Long id, @RequestBody Casa casa) {
         return ResponseEntity.ok(service.update(id, casa));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

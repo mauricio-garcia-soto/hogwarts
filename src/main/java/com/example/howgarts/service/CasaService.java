@@ -24,7 +24,7 @@ public class CasaService {
 
     }
 
-    public Optional<CasaDto> getById(Integer id) {
+    public Optional<CasaDto> getById(Long id) {
         return casaRepository.findById(id).map(CasaMapper::toDTO);
     }
 
@@ -32,12 +32,12 @@ public class CasaService {
         return casaRepository.save(casa);
     }
 
-    public Casa update(Integer id, Casa casa) {
-        casa.setId(Long.valueOf(id));
+    public Casa update(Long id, Casa casa) {
+        casa.setIdCasa(Long.valueOf(id));
         return casaRepository.save(casa);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         casaRepository.deleteById(id);
     }
 }

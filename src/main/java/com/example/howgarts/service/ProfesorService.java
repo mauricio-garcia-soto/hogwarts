@@ -23,7 +23,7 @@ public class ProfesorService {
         return profesorRepository.findAll().stream().map(ProfesorMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Optional<ProfesorDto> getById(Integer id) {
+    public Optional<ProfesorDto> getById(Long id) {
         return profesorRepository.findById(id).map(ProfesorMapper::toDTO);
     }
 
@@ -31,12 +31,12 @@ public class ProfesorService {
         return profesorRepository.save(profesor);
     }
 
-    public Profesor update(Integer id, Profesor profesor) {
-        profesor.setId(id.longValue());
+    public Profesor update(Long id, Profesor profesor) {
+        profesor.setIdProfesor(id);
         return profesorRepository.save(profesor);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         profesorRepository.deleteById(id);
     }
 }

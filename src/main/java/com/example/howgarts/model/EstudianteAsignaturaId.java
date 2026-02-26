@@ -1,17 +1,13 @@
 package com.example.howgarts.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Data;
+
 import java.io.Serializable;
 
 @Data
 @Embeddable
-public class EstudianteAsignatura implements Serializable {
-
-    @Column(name = "id_estudiante")
+public class EstudianteAsignaturaId implements Serializable {
     private Long idEstudiante;
-
-    @Column(name = "id_asignatura")
     private Long idAsignatura;
 }

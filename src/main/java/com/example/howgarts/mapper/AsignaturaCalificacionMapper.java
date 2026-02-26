@@ -10,7 +10,7 @@ public class AsignaturaCalificacionMapper {
         if (asignatura == null) return null;
 
         AsignaturaCalificacionDto dto = new AsignaturaCalificacionDto();
-        dto.setAsignatura(asignatura.getNombre());
+        dto.setAsignatura(asignatura.getNombreAsignatura());
         dto.setCalificacion(calificacion);
         return dto;
     }

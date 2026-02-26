@@ -1,4 +1,6 @@
 package com.example.howgarts.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -7,37 +9,49 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-
 @Data
 @Entity
+@Table(name = "estudiante")
 public class Estudiante {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_estudiante")
+    private Long idEstudiante;
+
 
     private String nombre;
-    private int anyoCurso;
+
+
+    private String apellido;
+
+
+
+    @Column(name = "anyo_curso")
+    private Long anyoCurso;
+
+    @Column(name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
+
+
+
+    @OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference("estudiante-mascota") // Nombre único
+    private Mascota mascota;
 
     @ManyToOne
     @JoinColumn(name = "id_casa")
-    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JsonBackReference("estudiante-casa") // Nombre único
     private Casa casa;
 
+    @OneToMany(mappedBy = "estudiante")
+    @JsonManagedReference("estudiante-nota") // Ya tiene nombre, perfecto
+    private List<Nota> notas;
 
-    @OneToOne(mappedBy = "estudiante", cascade = CascadeType.ALL)
-    private Mascota mascota;
-
-    @OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Nota> notas = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "estudiante_asignatura",
-            joinColumns = @JoinColumn(name = "id_estudiante"),
-            inverseJoinColumns = @JoinColumn(name = "id_asignatura")
-    )
-    @OnDelete(action = OnDeleteAction.RESTRICT)
-    private List<Asignatura> listaAsignaturas;
+    public void setMascota(Mascota mascota) {
+        this.mascota = mascota;
+        if (mascota != null) {
+            mascota.setEstudiante(this);
+        }
+    }
 }

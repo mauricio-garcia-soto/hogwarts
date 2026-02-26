@@ -7,6 +7,10 @@ public class ProfesorDto {
     private String nombre;
     private String asignatura;
     private LocalDate fechaInicio;
+    private String apellido;
+
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
     public Long getId() {
         return id;

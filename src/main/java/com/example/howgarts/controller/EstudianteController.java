@@ -7,7 +7,6 @@ import com.example.howgarts.service.EstudianteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -26,7 +25,7 @@ public class EstudianteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EstudianteDto> getById(@PathVariable int id) {
+    public ResponseEntity<EstudianteDto> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.obtenerPorId(id));
     }
 
@@ -36,12 +35,12 @@ public class EstudianteController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EstudianteDto> update(@PathVariable int id, @RequestBody EstudianteUpdateDto dto) {
+    public ResponseEntity<EstudianteDto> update(@PathVariable Long id, @RequestBody EstudianteUpdateDto dto) {
         return ResponseEntity.ok(service.actualizarEstudiante(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable int id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.eliminarEstudiante(id);
         return ResponseEntity.noContent().build();
     }

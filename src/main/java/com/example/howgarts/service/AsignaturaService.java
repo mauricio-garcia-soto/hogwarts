@@ -23,7 +23,7 @@ public class AsignaturaService {
         return asignaturaRepository.findAll();
     }
 
-    public Optional<Asignatura> getById(Integer id) {
+    public Optional<Asignatura> getById(Long id) {
         return asignaturaRepository.findById(id);
     }
 
@@ -32,12 +32,12 @@ public class AsignaturaService {
         return asignaturaRepository.save(asignatura);
     }
 
-    public Asignatura update(Integer id, Asignatura asignatura) {
-        asignatura.setId(id.longValue());
+    public Asignatura update(Long id, Asignatura asignatura) {
+        asignatura.setIdAsignatura(id);
         return asignaturaRepository.save(asignatura);
     }
 
-    public void delete(Integer id) {
+    public void delete(Long id) {
         asignaturaRepository.deleteById(id);
     }
 }

@@ -30,7 +30,7 @@ public class AsignaturaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AsignaturaDto> getById(@PathVariable Integer id) {
+    public ResponseEntity<AsignaturaDto> getById(@PathVariable Long id) {
         return service.getById(id)
                 .map(AsignaturaMapper::toDTO)
                 .map(ResponseEntity::ok)
@@ -45,14 +45,14 @@ public class AsignaturaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AsignaturaDto> update(@PathVariable Integer id, @RequestBody AsignaturaDto asignaturaDto) {
+    public ResponseEntity<AsignaturaDto> update(@PathVariable Long id, @RequestBody AsignaturaDto asignaturaDto) {
         Asignatura asignatura = AsignaturaMapper.toEntity(asignaturaDto);
         Asignatura updated = service.update(id, asignatura);
         return ResponseEntity.ok(AsignaturaMapper.toDTO(updated));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

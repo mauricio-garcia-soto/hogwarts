@@ -3,65 +3,76 @@ package com.example.howgarts.mapper;
 import com.example.howgarts.dto.CrearEstudianteDto;
 import com.example.howgarts.dto.EstudianteUpdateDto;
 import com.example.howgarts.dto.EstudianteDto;
-import com.example.howgarts.dto.MascotaDto;
+import com.example.howgarts.dto.AsignaturaCalificacionDto;
 import com.example.howgarts.model.Estudiante;
 import com.example.howgarts.model.Mascota;
+import com.example.howgarts.model.Nota;
 import org.springframework.stereotype.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class EstudianteMapper {
 
-    public EstudianteDto toDto(Estudiante estudiante) {
-        if (estudiante == null) return null;
+    private final MascotaMapper mascotaMapper;
 
+    public EstudianteMapper(MascotaMapper mascotaMapper){
+        this.mascotaMapper = mascotaMapper;
+    }
+
+    public EstudianteDto toDto(Estudiante estudiante){
+        if(estudiante == null) return null;
         EstudianteDto dto = new EstudianteDto();
-        dto.setId(estudiante.getId());
+        dto.setId(estudiante.getIdEstudiante());
         dto.setNombre(estudiante.getNombre());
-        dto.setAnyoCurso(estudiante.getAnyoCurso());
-        dto.setFechaNacimiento(estudiante.getFechaNacimiento());
-        dto.setCasa(estudiante.getCasa() != null ? estudiante.getCasa().getNombre() : null);
-
-        if (estudiante.getMascota() != null) {
-            MascotaDto mascotaDto = new MascotaDto();
-            mascotaDto.setId(estudiante.getMascota().getId());
-            mascotaDto.setNombre(estudiante.getMascota().getNombre());
-            mascotaDto.setEspecie(estudiante.getMascota().getEspecie());
-            dto.setMascota(mascotaDto);
+        if (estudiante.getAnyoCurso() != null) {
+            dto.setAnyoCurso(Math.toIntExact(estudiante.getAnyoCurso()));
         }
-
+        dto.setFechaNacimiento(estudiante.getFechaNacimiento());
+        if (estudiante.getCasa() != null) {
+            dto.setCasa(estudiante.getCasa().getNombre());
+        }
+        dto.setMascota(mascotaMapper.toDTO(estudiante.getMascota()));
+        if (estudiante.getNotas() != null && !estudiante.getNotas().isEmpty()) {
+            List<AsignaturaCalificacionDto> listaDtos = estudiante.getNotas().stream()
+                    .map(nota -> {
+                        AsignaturaCalificacionDto dtoo = new AsignaturaCalificacionDto();
+                        if (nota.getAsignatura() != null) {
+                            dtoo.setAsignatura(nota.getAsignatura().getNombreAsignatura());
+                        }
+                        dtoo.setCalificacion(nota.getCalificacion());
+                        return dtoo;
+                    }).collect(Collectors.toList());
+            dto.setAsignaturas(listaDtos);
+        } else {
+            dto.setAsignaturas(new ArrayList<>());
+        }
         return dto;
     }
 
-    public Estudiante toEntity(CrearEstudianteDto dto) {
-        if (dto == null) return null;
+    public Estudiante toEntity(CrearEstudianteDto estudianteDto){
+        if(estudianteDto == null) return null;
         Estudiante estudiante = new Estudiante();
-        estudiante.setNombre(dto.getNombre());
-        estudiante.setAnyoCurso(dto.getAnyoCurso());
-        estudiante.setFechaNacimiento(dto.getFechaNacimiento());
-
-        if (dto.getMascota() != null) {
-            Mascota mascota = new Mascota();
-            mascota.setNombre(dto.getMascota().getNombre());
-            mascota.setEspecie(dto.getMascota().getEspecie());
-            estudiante.setMascota(mascota);
+        estudiante.setNombre(estudianteDto.getNombre());
+        estudiante.setApellido(estudianteDto.getApellido());
+        estudiante.setAnyoCurso((long) estudianteDto.getAnyoCurso());
+        estudiante.setFechaNacimiento(estudianteDto.getFechaNacimiento());
+        if (estudianteDto.getMascota() != null) {
+            estudiante.setMascota(mascotaMapper.toEntity(estudianteDto.getMascota()));
         }
-
         return estudiante;
     }
-
-    public void updateEntityFromDto(CrearEstudianteDto dto, Estudiante estudiante) {
+    public void updateEntityFromUpdateDto(EstudianteUpdateDto dto, Estudiante estudiante) {
         if (dto == null || estudiante == null) return;
 
-        estudiante.setAnyoCurso(dto.getAnyoCurso());
-        estudiante.setFechaNacimiento(dto.getFechaNacimiento());
+        if (dto.getAnyoCurso() > 0) {
+            estudiante.setAnyoCurso((long) dto.getAnyoCurso());
+        }
 
-        if (dto.getMascota() == null) {
-            estudiante.setMascota(null);
-        } else {
-            Mascota mascota = (estudiante.getMascota() != null) ? estudiante.getMascota() : new Mascota();
-            mascota.setNombre(dto.getMascota().getNombre());
-            mascota.setEspecie(dto.getMascota().getEspecie());
-            estudiante.setMascota(mascota);
+        if (dto.getFechaNacimiento() != null) {
+            estudiante.setFechaNacimiento(dto.getFechaNacimiento());
         }
     }
-}
+
+    }

@@ -25,7 +25,7 @@ public class MascotaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MascotaDto> getById(@PathVariable Integer id) {
+    public ResponseEntity<MascotaDto> getById(@PathVariable Long id) {
         return service.getById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -42,7 +42,7 @@ public class MascotaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

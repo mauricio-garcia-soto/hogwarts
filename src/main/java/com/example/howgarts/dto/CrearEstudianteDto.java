@@ -8,7 +8,7 @@ public class CrearEstudianteDto {
         private String apellido;
         private int anyoCurso;
         private LocalDate fechaNacimiento;
-        private int casaId;
+        private long casaId;
         private MascotaDto mascota;
 
 
@@ -20,8 +20,8 @@ public class CrearEstudianteDto {
         public void setAnyoCurso(int anyoCurso) { this.anyoCurso = anyoCurso; }
         public LocalDate getFechaNacimiento() { return fechaNacimiento; }
         public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
-        public int getCasaId() { return casaId; }
-        public void setCasaId(int casaId) { this.casaId = casaId; }
+        public long getCasaId() { return casaId; }
+        public void setCasaId(long casaId) { this.casaId = casaId; }
         public MascotaDto getMascota() { return mascota; }
         public void setMascota(MascotaDto mascota) { this.mascota = mascota; }
     }

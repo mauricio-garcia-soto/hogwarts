@@ -12,7 +12,7 @@ public class CasaMapper {
         if (casa == null) return null;
 
         CasaDto dto = new CasaDto();
-        dto.setId(casa.getId());
+        dto.setId(casa.getIdCasa());
         dto.setNombre(casa.getNombre());
         dto.setFundador(casa.getFundador());
         dto.setFantasma(casa.getFantasma());

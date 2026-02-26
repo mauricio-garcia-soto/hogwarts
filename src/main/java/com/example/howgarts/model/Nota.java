@@ -5,25 +5,25 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @Entity
-@NoArgsConstructor
-@Table(name = "asignatura_calificacion")
+@Table(name = "estudiante_asignatura")
 public class Nota {
 
+    @EmbeddedId
+    private EstudianteAsignatura idNota;
 
     @ManyToOne
     @MapsId("idEstudiante")
     @JoinColumn(name = "id_estudiante")
-    @JsonBackReference
-    Estudiante estudiante;
+    @JsonBackReference("estudiante-nota")
+    private Estudiante estudiante;
 
     @ManyToOne
     @MapsId("idAsignatura")
     @JoinColumn(name = "id_asignatura")
-    @JsonManagedReference
-    Asignatura asignatura;
+    @JsonBackReference("asignatura-nota")
+    private Asignatura asignatura;
 
-    double nota;
+    private Double calificacion;
 }

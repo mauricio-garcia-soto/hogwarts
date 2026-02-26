@@ -1,7 +1,10 @@
 package com.example.howgarts.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import java.sql.Date;
 
 @Data
 @Entity
@@ -9,18 +12,19 @@ public class Profesor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idProfesor;
 
     private String nombre;
+    private String apellido;
+    private Date fechaInicio;
 
-    @OneToOne
-    @JoinColumn(name = "profesor_asignatura")
-    private Asignatura asignatura;
-
-    @OneToOne
-    @JoinColumn(name = "profesor_casa")
+    @OneToOne(mappedBy = "jefe")
+    @JsonBackReference
     private Casa casa;
 
-    private java.time.LocalDate fechaInicio;
 
+    @OneToOne
+    @JoinColumn(name = "id_asignatura")
+    @JsonManagedReference
+    private Asignatura asignatura;
 }

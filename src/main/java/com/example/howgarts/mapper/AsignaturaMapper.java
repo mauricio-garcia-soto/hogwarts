@@ -10,8 +10,8 @@ public class AsignaturaMapper {
     public static AsignaturaDto toDTO(Asignatura asignatura) {
         if (asignatura == null) return null;
         AsignaturaDto dto = new AsignaturaDto();
-        dto.setId(asignatura.getId());
-        dto.setNombre(asignatura.getNombre());
+        dto.setId(asignatura.getIdAsignatura());
+        dto.setNombre(asignatura.getNombreAsignatura());
         dto.setAula(asignatura.getAula());
         dto.setObligatoria(asignatura.getObligatoria());
         if (asignatura.getProfesor() != null) {
@@ -23,8 +23,8 @@ public class AsignaturaMapper {
     public static Asignatura toEntity(AsignaturaDto dto) {
         if (dto == null) return null;
         Asignatura asignatura = new Asignatura();
-        asignatura.setId(dto.getId());
-        asignatura.setNombre(dto.getNombre());
+        asignatura.setIdAsignatura(dto.getId());
+        asignatura.setNombreAsignatura(dto.getNombre());
         asignatura.setAula(dto.getAula());
         asignatura.setObligatoria(dto.getObligatoria());
         return asignatura;
