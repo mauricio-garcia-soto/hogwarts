@@ -1,28 +1,22 @@
 package com.example.howgarts.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import lombok.Data;
+
 import java.time.LocalDate;
 
+@Data
 public class CrearEstudianteDto {
 
         private String nombre;
         private String apellido;
+
+        @Max(7)
+        @Min(1)
         private int anyoCurso;
         private LocalDate fechaNacimiento;
         private long casaId;
         private MascotaDto mascota;
-
-
-        public String getNombre() { return nombre; }
-        public void setNombre(String nombre) { this.nombre = nombre; }
-        public String getApellido() { return apellido; }
-        public void setApellido(String apellido) { this.apellido = apellido; }
-        public int getAnyoCurso() { return anyoCurso; }
-        public void setAnyoCurso(int anyoCurso) { this.anyoCurso = anyoCurso; }
-        public LocalDate getFechaNacimiento() { return fechaNacimiento; }
-        public void setFechaNacimiento(LocalDate fechaNacimiento) { this.fechaNacimiento = fechaNacimiento; }
-        public long getCasaId() { return casaId; }
-        public void setCasaId(long casaId) { this.casaId = casaId; }
-        public MascotaDto getMascota() { return mascota; }
-        public void setMascota(MascotaDto mascota) { this.mascota = mascota; }
     }
 
